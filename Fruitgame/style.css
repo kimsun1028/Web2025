@@ -26,3 +26,12 @@ body {
   font-weight: bold;
   user-select: none;
 }
+
+.select-box {
+  position: absolute;        
+  border: 2px solid blue;    
+  background: rgba(0, 0, 255, 0.2); 
+  pointer-events: none;      
+  z-index: 999;               
+}
+
