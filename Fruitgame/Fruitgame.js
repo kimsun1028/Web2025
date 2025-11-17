@@ -7,7 +7,10 @@ let score = 0;
 let timer = 60;
 let timerId = null;
 
-
+// 🔥 addEventListener 오타 수정
+document.addEventListener("mousedown", mdown);
+document.addEventListener("mousemove", mmove);
+document.addEventListener("mouseup", mup);
 
 // 게임 시작 함수
 startBtn.onclick = function gameStart() {
@@ -15,9 +18,7 @@ startBtn.onclick = function gameStart() {
     score = 0;
     createFruits();
     startTimer();
-
 };
-
 
 function createFruits() {
     const rows = 10;
@@ -56,4 +57,16 @@ function startTimer() {
             alert(`게임 종료! 총 점수 : ${score}`);
         }
     }, 1000);
+}
+
+function mdown() {
+    console.log("마우스 클릭!");
+}
+
+function mmove() {
+    console.log("마우스 이동!");
+}
+
+function mup() {
+    console.log("마우스 때기!");
 }
