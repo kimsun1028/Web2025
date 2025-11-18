@@ -27,6 +27,13 @@ body {
   user-select: none;
 }
 
+.fruit.selected {
+  transform: scale(1.05);   /* 약간 확대 */
+  box-shadow: 0 0 8px rgba(255, 200, 0, 0.7);  /* 노란 빛 번짐 */
+  transition: 0.15s;
+}
+
+
 .select-box {
   position: absolute;        
   border: 2px solid blue;    

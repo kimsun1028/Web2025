@@ -89,7 +89,7 @@ function mmove(e) {
     selectBox.style.top = fromtop + "px"
     selectBox.style.width = width + "px"
     selectBox.style.height = height + "px"
-
+    selectFruit(fromleft,fromtop,width,height);
     }
     else
         return;
@@ -98,10 +98,38 @@ function mmove(e) {
 function mup() {
     isDragging = false
     console.log("마우스 때기!");
-    calFruit();
+    
+    const fruits = gameArea.querySelectorAll(".fruit")
+    for (let fruit of fruits) {
+        fruit.classList.remove("selected");
+    }
+    removeFruit();
     selectBox.remove();
 }
 
-function calFruit() {
+function removeFruit() {
 
+}
+
+function selectFruit(left,top,width,height) {
+    let fruit = null;
+    const fruits = gameArea.querySelectorAll(".fruit")
+    for (let fruit of fruits) {
+        if (isSelected(fruit,left,top,width,height)){
+            fruit.classList.add("selected");
+        }
+        else
+            fruit.classList.remove("selected");
+    }
+}
+
+function isSelected(fruit,left,top,width,height){
+    let rec = fruit.getBoundingClientRect();
+    let right = left + width
+    let bottom = top + height
+    if((rec.left < right)&&(rec.right > left)&&(rec.top < bottom)&&(rec.bottom > top)) {
+        return true
+    }   
+    else
+        return false
 }
