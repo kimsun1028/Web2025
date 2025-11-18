@@ -14,12 +14,12 @@ body {
   display: flex;          /* 한 행 안의 사과들을 가로로 배치 */
 }
 
-.apple {
+.fruit {
   width: 40px;
   height: 40px;
   background-color: #ffcccc;
   border: 1px solid #cc6666;
-  margin: 1px;
+  margin: 6px;
   line-height: 40px;
   text-align: center;
   border-radius: 8px;

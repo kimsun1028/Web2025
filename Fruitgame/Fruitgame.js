@@ -34,14 +34,14 @@ function createFruits() {
         rowDiv.classList.add("row");
 
         for (let j = 0; j < cols; j++) {
-            const apple = document.createElement("div");
-            apple.classList.add("apple");
+            const fruit = document.createElement("div");
+            fruit.classList.add("fruit");
 
             // 1 ~ 9 랜덤 숫자 부여
             const num = Math.floor(Math.random() * 9) + 1;
-            apple.textContent = num;
+            fruit.textContent = num;
 
-            rowDiv.appendChild(apple);
+            rowDiv.appendChild(fruit);
         }
 
         gameArea.appendChild(rowDiv);
@@ -98,5 +98,10 @@ function mmove(e) {
 function mup() {
     isDragging = false
     console.log("마우스 때기!");
+    calFruit();
     selectBox.remove();
+}
+
+function calFruit() {
+
 }
