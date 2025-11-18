@@ -52,7 +52,7 @@ function createFruits() {
 // 타이머 시작 함수
 function startTimer() {
     clearInterval(timerId);
-    timer = 60;
+    timer = 120;
     timerDisplay.textContent = timer;
 
     timerId = setInterval(() => {
