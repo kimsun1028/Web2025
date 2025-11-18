@@ -1,16 +1,19 @@
+// html 요소 반환
 const startBtn = document.querySelector("#start-btn");
 const gameArea = document.querySelector("#game-area");
 const scoreDisplay = document.querySelector("#score");
 const timerDisplay = document.querySelector("#timer");
 
+// 전역 변수 설정
 let score = 0;
-let timer = 60;
+let timer = 120;
 let selectBox = null;
 let timerId = null;
 let startX = null;
 let startY = null;
 let isDragging = false;
 
+// 이벤트리스너 설정
 document.addEventListener("mousedown", mdown);
 document.addEventListener("mousemove", mmove);
 document.addEventListener("mouseup", mup);
@@ -23,6 +26,7 @@ startBtn.onclick = function gameStart() {
     startTimer();
 };
 
+// 과일 생성 함수
 function createFruits() {
     const rows = 10;
     const cols = 17;
@@ -35,7 +39,6 @@ function createFruits() {
             const fruit = document.createElement("div");
             fruit.classList.add("fruit");
 
-            // 1 ~ 9 랜덤 숫자 부여
             const num = Math.floor(Math.random() * 9) + 1;
             fruit.textContent = num;
 
@@ -46,6 +49,7 @@ function createFruits() {
     }
 }
 
+// 타이머 시작 함수
 function startTimer() {
     clearInterval(timerId);
     timer = 60;
@@ -62,6 +66,7 @@ function startTimer() {
     }, 1000);
 }
 
+// 마우스 클릭 시 이벤트 함수
 function mdown(e) {
     isDragging = true;
     console.log("마우스 클릭!");
@@ -73,6 +78,7 @@ function mdown(e) {
 
 }
 
+// 마우스 움직일 시 이벤트 함수
 function mmove(e) {
     if (isDragging) {
     console.log("마우스 이동!");
@@ -93,6 +99,7 @@ function mmove(e) {
         return;
 }
 
+// 마우스 땔 시 이벤트 함수
 function mup(e) {
     isDragging = false
     console.log("마우스 때기!");
@@ -106,6 +113,7 @@ function mup(e) {
     selectBox.remove();
 }
 
+// 과일 제거 함수
 function removeFruit() {
     let selectedFruits = gameArea.querySelectorAll(".fruit.selected");
     let total = 0;
@@ -125,6 +133,7 @@ function removeFruit() {
     }
 }
 
+// 과일 선택 함수
 function selectFruit(left,top,width,height) {
     let fruit = null;
     const fruits = gameArea.querySelectorAll(".fruit")
@@ -137,6 +146,7 @@ function selectFruit(left,top,width,height) {
     }
 }
 
+// 선택 여부 반환 함수
 function isSelected(fruit,left,top,width,height){
     let rec = fruit.getBoundingClientRect();
     let right = left + width
