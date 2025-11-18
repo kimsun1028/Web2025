@@ -5,40 +5,56 @@ body {
 
 #game-area {
   display: flex;
-  flex-direction: column; /* 행들이 아래로 쌓이게 */
+  flex-direction: column; /* 행들을 세로로 쌓음 */
   align-items: center;
   margin-top: 20px;
 }
 
 .row {
-  display: flex;          /* 한 행 안의 사과들을 가로로 배치 */
+  display: flex;          /* 행 안에서 과일들을 가로 정렬 */
 }
 
-.fruit {
+/* fruit와 empty는 화면에서 '같은 칸' 역할을 해야 한다 */
+.fruit,
+.empty {
   width: 40px;
   height: 40px;
-  background-color: #ffcccc;
-  border: 1px solid #cc6666;
   margin: 6px;
-  line-height: 40px;
-  text-align: center;
   border-radius: 8px;
   font-weight: bold;
   user-select: none;
-}
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-.fruit.selected {
-  transform: scale(1.05);   /* 약간 확대 */
-  box-shadow: 0 0 8px rgba(255, 200, 0, 0.7);  /* 노란 빛 번짐 */
   transition: 0.15s;
 }
 
-
-.select-box {
-  position: absolute;        
-  border: 2px solid blue;    
-  background: rgba(0, 0, 255, 0.2); 
-  pointer-events: none;      
-  z-index: 999;               
+/* 실제 과일 */
+.fruit {
+  background-color: #ffcccc;
+  border: 1px solid #cc6666;
 }
 
+/* 선택된 과일 강조 효과 */
+.fruit.selected {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(255, 200, 0, 0.7);
+}
+
+/* 삭제된 후의 빈 칸 */
+.empty {
+  background: transparent;
+  border: 1px solid transparent;
+  pointer-events: none;
+}
+
+/* 드래그 박스 */
+.select-box {
+  position: absolute;
+  border: 2px solid blue;
+  background: rgba(0, 0, 255, 0.2);
+  pointer-events: none;
+  z-index: 999;
+}

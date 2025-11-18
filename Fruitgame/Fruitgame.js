@@ -11,8 +11,6 @@ let startX = null;
 let startY = null;
 let isDragging = false;
 
-
-// 🔥 addEventListener 오타 수정
 document.addEventListener("mousedown", mdown);
 document.addEventListener("mousemove", mmove);
 document.addEventListener("mouseup", mup);
@@ -95,20 +93,36 @@ function mmove(e) {
         return;
 }
 
-function mup() {
+function mup(e) {
     isDragging = false
     console.log("마우스 때기!");
     
-    const fruits = gameArea.querySelectorAll(".fruit")
+   
+    removeFruit();
+     const fruits = gameArea.querySelectorAll(".fruit")
     for (let fruit of fruits) {
         fruit.classList.remove("selected");
     }
-    removeFruit();
     selectBox.remove();
 }
 
 function removeFruit() {
-
+    let selectedFruits = gameArea.querySelectorAll(".fruit.selected");
+    let total = 0;
+    let num = 0
+    for (const selected of selectedFruits){
+        total += parseInt(selected.textContent)
+    }
+    if (total == 10){
+        for (const selected of selectedFruits){
+            num++;
+            selected.textContent = ""
+        selected.classList.add("empty")
+        selected.classList.remove("fruit")
+        }
+        score += num;
+        scoreDisplay.textContent = score;
+    }
 }
 
 function selectFruit(left,top,width,height) {
