@@ -12,6 +12,8 @@ let timerId = null;
 let startX = null;
 let startY = null;
 let isDragging = false;
+let tprob = 0.02
+let bprob = 0.02
 
 // 이벤트리스너 설정
 document.addEventListener("mousedown", mdown);
@@ -28,24 +30,24 @@ startBtn.onclick = function gameStart() {
 
 // 과일 생성 함수
 function createFruits() {
-    const rows = 10;
-    const cols = 17;
+    const total = 10 * 17; // 170칸
 
-    for (let i = 0; i < rows; i++){
-        const rowDiv = document.createElement("div");
-        rowDiv.classList.add("row");
+    for (let i = 0; i < total; i++) {
+        const fruit = document.createElement("div");
+        fruit.classList.add("fruit");
 
-        for (let j = 0; j < cols; j++) {
-            const fruit = document.createElement("div");
-            fruit.classList.add("fruit");
+        const num = Math.floor(Math.random() * 9) + 1;
+        fruit.textContent = num;
 
-            const num = Math.floor(Math.random() * 9) + 1;
-            fruit.textContent = num;
-
-            rowDiv.appendChild(fruit);
+        // 특수 과일 확률 적용
+        let r = Math.random();
+        if (r < tprob) {
+            fruit.classList.add("timer-fruit");  // +5초 과일
+        } else if (r < tprob + bprob) {
+            fruit.classList.add("bonus-fruit");  // +5점 과일
         }
 
-        gameArea.appendChild(rowDiv);
+        gameArea.appendChild(fruit);
     }
 }
 
@@ -106,7 +108,7 @@ function mup(e) {
     
    
     removeFruit();
-     const fruits = gameArea.querySelectorAll(".fruit")
+    const fruits = gameArea.querySelectorAll(".fruit")
     for (let fruit of fruits) {
         fruit.classList.remove("selected");
     }
@@ -118,18 +120,30 @@ function removeFruit() {
     let selectedFruits = gameArea.querySelectorAll(".fruit.selected");
     let total = 0;
     let num = 0
+    let bonus_num = 0
+    let timer_num = 0
     for (const selected of selectedFruits){
         total += parseInt(selected.textContent)
     }
     if (total == 10){
         for (const selected of selectedFruits){
             num++;
-            selected.textContent = ""
-        selected.classList.add("empty")
-        selected.classList.remove("fruit")
+            if (selected.classList.contains("bonus-fruit")){
+                bonus_num++;
+            }
+            else if (selected.classList.contains("timer-fruit")){
+                timer_num++
+            }
+            selected.textContent = "";
+            selected.classList.add("empty");
+            selected.classList.remove("bonus-fruit");
+            selected.classList.remove("timer-fruit")
         }
-        score += num;
+        
+        score += num + 4*bonus_num;
+        timer += 5*timer_num;
         scoreDisplay.textContent = score;
+        timerDisplay.textContent = timer;
     }
 }
 
@@ -138,6 +152,7 @@ function selectFruit(left,top,width,height) {
     let fruit = null;
     const fruits = gameArea.querySelectorAll(".fruit")
     for (let fruit of fruits) {
+        if (fruit.classList.contains("empty")) continue; 
         if (isSelected(fruit,left,top,width,height)){
             fruit.classList.add("selected");
         }
