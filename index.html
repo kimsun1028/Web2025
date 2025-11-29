@@ -3,38 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>과일 게임 프로젝트</title>
+    <title>Fruit Game Project</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
     <style>
+        /* 1. 전체 배경 꾸미기 */
         body {
-            text-align: center; /* 글자 가운데 정렬 */
-            background-color: #f0f8ff; /* 연한 하늘색 배경 */
-            margin-top: 100px;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* 화면 꽉 채우기 */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); /* 상큼한 그라데이션 */
+            font-family: 'Jua', sans-serif; /* 폰트 적용 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 스크롤바 없애기 */
         }
+
+        
         h1 {
-            color: #ff6347; /* 제목 색상 */
+            font-size: 4rem; 
+            color: #fff;
+            text-shadow: 4px 4px 0px #ff6b6b; 
+            animation: float 3s ease-in-out infinite; 
+            margin-bottom: 10px;
+            z-index: 10; 
         }
+
+        p {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 40px;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        
         .start-btn {
-            display: inline-block;
-            padding: 20px 40px;
-            background-color: orange;
+            font-size: 2rem;
+            text-decoration: none;
             color: white;
-            text-decoration: none; /* 밑줄 제거 */
-            font-size: 24px;
-            border-radius: 10px; /* 모서리 둥글게 */
-            font-weight: bold;
+            background-color: #ff6b6b;
+            padding: 20px 60px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s; 
+            border: 4px solid white;
+            z-index: 10;
         }
+
         .start-btn:hover {
-            background-color: darkorange; /* 마우스 올리면 색 진하게 */
+            background-color: #ff4757;
+            transform: scale(1.1) rotate(-3deg);
+            cursor: pointer;
+        }
+
+        
+        .background-fruit {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.6;
+            animation: drop 5s infinite linear;
+        }
+
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); } /* 위로 20px 이동 */
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <h1>🍎 새콤달콤 과일 게임 🍇</h1>
-    <p>제한 시간 안에 과일을 모으세요!</p>
-    <br>
+    <h1>🍓 과일 게임 🍇</h1>
+    <p>제한 시간 안에 최고의 점수를 노려보세요!</p>
     
-    <a href="Fruitgame/Fruitgame.html" class="start-btn">게임 시작하기 ▶</a>
+    <a href="Fruitgame/Fruitgame.html" class="start-btn">GAME START ▶</a>
+
+    <div class="background-fruit" style="left: 10%; animation-duration: 4s;">🍎</div>
+    <div class="background-fruit" style="left: 20%; animation-duration: 6s; animation-delay: 1s;">🍌</div>
+    <div class="background-fruit" style="left: 50%; animation-duration: 5s; animation-delay: 2s;">🍇</div>
+    <div class="background-fruit" style="left: 70%; animation-duration: 7s; animation-delay: 0.5s;">🍉</div>
+    <div class="background-fruit" style="left: 85%; animation-duration: 4.5s; animation-delay: 1.5s;">🍊</div>
 
 </body>
 </html>
