@@ -1,80 +1,172 @@
+/* 폰트 적용 및 기본 설정 */
 body {
-  text-align: center;
-  font-family: sans-serif;
+    text-align: center;
+    font-family: 'Jua', sans-serif; /* 귀여운 폰트 적용 */
+    background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%); /* 화사한 배경 */
+    margin: 0;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden; /* 스크롤 방지 */
 }
 
-/* 텍스트 드래그 선택 완전 금지 */
+/* 텍스트 드래그 방지 */
 * {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
+/* 1. 상단 헤더 꾸미기 */
+.game-header h1 {
+    color: #ff6b6b;
+    text-shadow: 2px 2px 0 #fff;
+    margin: 10px 0;
+    font-size: 3rem;
+}
 
-/* 게임 영역 전체를 그리드로 구성 */
+.status-board {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.status-item {
+    background: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    color: #555;
+    font-weight: bold;
+    border: 3px solid #ffcc00; /* 노란 테두리 */
+}
+
+/* 2. 게임 영역 (그리드) */
 #game-area {
-  display: grid;
-  grid-template-columns: repeat(17, 60px); /* 사과 크기 커진 만큼 조정 */
-  grid-auto-rows: 60px;
-  gap: 0px;
-  margin-top: 20px;
-  justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(17, 50px); /* 크기 약간 조절 */
+    grid-auto-rows: 50px;
+    gap: 2px;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5); /* 반투명 배경 */
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: fit-content;
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
+/* 3. 과일 디자인 */
 .fruit {
-  width: 60px;
-  height: 60px;
-
-  background-image: url("image/Apple.png");
-  background-size: 55px 55px; /* 사과 크기 조절 (90% 정도) */
-  background-repeat: no-repeat;
-  background-position: center;
-
-  font-weight: bold;
-  font-size: 22px;
-  color: white;
-  text-shadow: 0px 0px 3px black;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: none; /* 기본 과일: 테두리 제거 */
+    width: 50px;
+    height: 50px;
+    background-image: url("image/Apple.png"); /* 이미지 경로 확인 필수! */
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.1s;
+    line-height: 1;      
+    text-align: center;
+    box-sizing: border-box;  /* 필수!  커지게 막아줍니다 */
+    padding-top: 7px;
 }
 
-/* 선택된 과일 */
+.fruit:hover {
+    transform: scale(1.1); /* 마우스 올리면 커짐 */
+}
+
+/* 선택된 과일 효과 */
 .fruit.selected {
-  outline: 4px solid #66aaff;
-  outline-offset: -2px;
-  border-radius: 8px;
+    outline: 3px solid #00d2d3;
+    background-color: rgba(0, 210, 211, 0.3);
+    border-radius: 10px;
+    transform: scale(0.9);
 }
 
-/* 보너스 과일 (노란색) */
-.bonus-fruit {
-  background-image: url("image/Golden_Apple.png")
+/* 특수 과일들 */
+.bonus-fruit { background-image: url("image/Golden_Apple.png"); }
+.timer-fruit { 
+    background-image: url("image/Timer.png"); 
+    color: black !important;
+    text-shadow: none;
 }
+.empty { opacity: 0; pointer-events: none; }
 
-/* 타이머 과일 (파란색) */
-.timer-fruit {
-  background-image: url("image/Timer.png");
-  color: black !important;
-  text-shadow: 0px 0px 0px white
-}
-
-/* 삭제된 과일 */
-.empty {
-  width: 60px;
-  height: 60px;
-  background: transparent;
-  pointer-events: none;
-}
-
-/* 드래그 박스 */
+/* 4. 드래그 박스 */
 .select-box {
-  position: absolute;
-  border: 2px solid blue;
-  background: rgba(0, 0, 255, 0.2);
-  pointer-events: none;
-  z-index: 999;
+    position: absolute;
+    border: 2px dashed #ff6b6b;
+    background: rgba(255, 107, 107, 0.2);
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* 5. 시작 버튼 꾸미기 */
+#start-btn {
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-family: 'Jua', sans-serif;
+    background-color: #ff9f43;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #e58e26;
+    transition: all 0.1s;
+}
+#start-btn:active {
+    box-shadow: 0 2px 0 #e58e26;
+    transform: translateY(3px);
+}
+
+/* 6. 게임 종료 팝업창 (Modal) */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); /* 어두운 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.hidden { display: none; } /* 평소엔 숨김 */
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    animation: popUp 0.3s ease-out;
+    border: 5px solid #ff9f43;
+}
+
+@keyframes popUp {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content h2 { font-size: 3rem; color: #eb4d4b; margin: 0; }
+.modal-content p { font-size: 1.5rem; color: #555; }
+.modal-content h1 { font-size: 4rem; color: #f0932b; margin: 20px 0; }
+.modal-content button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    background-color: #6ab04c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Jua', sans-serif;
 }

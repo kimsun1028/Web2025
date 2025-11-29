@@ -1,26 +1,34 @@
-<!DOCTYPE html>
-<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Fruitgame</title>
-  <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>Fruit game</h1>
+    <div class="game-header">
+        <h1>🍎 Fruit Game 🍇</h1>
+        <div class="status-board">
+            <div class="status-item">🏆 점수: <span id="score">0</span></div>
+            <div class="status-item">⏳ 시간: <span id="timer">120</span></div>
+        </div>
+    </div>
 
-  <div id="score-board">
-    점수: <span id="score">0</span>
-  </div>
-  <div id="timer-board">
-    시간: <span id="timer">120</span>
-  </div>
+    <div id="game-area"></div>
 
-  <div id="game-area">
-    <!--게임 영역 추가 예정-->
-  </div>
+    <div class="control-area">
+        <button id="start-btn">게임 시작</button>
+    </div>
 
-  <button id="start-btn">게임 시작</button>
+    <div id="game-over-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>게임 종료! 🛑</h2>
+            <p>당신의 최종 점수는?</p>
+            <h1 id="final-score">0점</h1>
+            <button onclick="location.reload()">다시 하기 🔄</button>
+        </div>
+    </div>
 
-  <script src="Fruitgame.js"></script>
+    <script src="Fruitgame.js"></script>
 </body>
-</html>

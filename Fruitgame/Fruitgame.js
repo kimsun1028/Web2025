@@ -4,6 +4,10 @@ const gameArea = document.querySelector("#game-area");
 const scoreDisplay = document.querySelector("#score");
 const timerDisplay = document.querySelector("#timer");
 
+// [추가] 게임 오버 팝업창 요소 가져오기
+const modal = document.querySelector("#game-over-modal");
+const finalScoreDisplay = document.querySelector("#final-score");
+
 // 전역 변수 설정
 let score = 0;
 let timer = 120;
@@ -54,16 +58,22 @@ function createFruits() {
 // 타이머 시작 함수
 function startTimer() {
     clearInterval(timerId);
-    timer = 120;
+    timer = 120; // 시간 설정
     timerDisplay.textContent = timer;
 
+    // 타이머가 돌기 시작
     timerId = setInterval(() => {
         timer--;
         timerDisplay.textContent = timer;
 
+        // 시간이 다 되면?
         if (timer <= 0) {
             clearInterval(timerId);
-            alert(`게임 종료! 총 점수 : ${score}`);
+            
+            // 기존: alert(`게임 종료! 총 점수 : ${score}`);  <-- 이거 지우고!
+            
+            // [변경] 예쁜 팝업창 띄우기
+            showGameOverModal(); 
         }
     }, 1000);
 }
@@ -171,4 +181,15 @@ function isSelected(fruit,left,top,width,height){
     }   
     else
         return false
+}
+// [추가] 게임 종료 팝업 띄우는 함수
+function showGameOverModal() {
+    const modal = document.querySelector("#game-over-modal");
+    const finalScore = document.querySelector("#final-score");
+    
+    // 점수 넣어주고
+    finalScore.textContent = score + "점";
+    
+    // 숨겨뒀던 창을 보여줌 (hidden 클래스 제거)
+    modal.classList.remove("hidden");
 }
