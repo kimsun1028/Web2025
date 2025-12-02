@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임 방법 설명</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. 상큼 터지는 배경 설정 */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* 내용이 많아도 잘리지 않게 */
+            /* 오렌지&옐로우 그라데이션 + 은은한 과일 패턴 */
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 234, 167, 0.8) 0%, rgba(255, 234, 167, 0) 50%),
+                radial-gradient(circle at 80% 80%, rgba(250, 177, 160, 0.8) 0%, rgba(250, 177, 160, 0) 50%),
+                linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            font-family: 'Jua', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px; /* 모바일에서 여백 확보 */
+            box-sizing: border-box;
+        }
+
+        /* 2. 유니크한 모양의 설명 상자 */
+        .guide-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 700px;
+            padding: 50px 40px;
+            /* 물결치는 듯한 둥근 테두리 */
+            border-radius: 50px 20px 60px 30px / 30px 50px 20px 60px;
+            box-shadow: 0 20px 40px rgba(255, 159, 67, 0.3);
+            text-align: center;
+            position: relative;
+            border: 6px solid #ffda79; /* 상큼한 노란 테두리 */
+            /* 통통 튀어나오는 애니메이션 */
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* 3. 제목 디자인 */
+        h1 {
+            color: #e67e22;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0px #f1c40f;
+            display: inline-block;
+            position: relative;
+        }
+        /* 제목 양옆 장식 (가상 요소) */
+        h1::before, h1::after {
+            content: '🍊';
+            font-size: 2.5rem;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        h1::before { left: -60px; }
+        h1::after { right: -60px; }
+
+        /* 4. 부제목 (타임어택 강조) */
+        .subtitle {
+            font-size: 1.6rem;
+            color: #fff;
+            background: #ff9f43;
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 15px rgba(255, 159, 67, 0.4);
+            transform: rotate(-2deg); /* 살짝 기울여서 재미 더하기 */
+        }
+
+        /* 5. 규칙 설명 영역 */
+        .rule-section {
+            text-align: left;
+            background: #fff;
+            padding: 30px;
+            border-radius: 25px;
+            border: 3px dashed #ffda79; /* 점선 테두리 */
+            margin-bottom: 30px;
+        }
+
+        .rule-item {
+            font-size: 1.35rem;
+            color: #555;
+            margin: 15px 0;
+            line-height: 1.7;
+            display: flex;
+            align-items: flex-start;
+        }
+        /* 번호 대신 귀여운 아이콘 사용 */
+        .rule-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            background: #ffda79;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+            color: #e67e22;
+        }
+
+        /* 강조 효과 (형광펜 밑줄 느낌) */
+        .highlight {
+            color: #d35400;
+            font-weight: bold;
+            background: linear-gradient(to top, #ffd700 40%, transparent 40%);
+            padding: 0 5px;
+        }
+
+        /* 6. 아이템 설명 영역 */
+        h3 { color: #e67e22; font-size: 1.8rem; margin-bottom: 20px; }
+        
+        .item-info {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+        .item {
+            background: linear-gradient(135deg, #fff 0%, #fff5d7 100%);
+            padding: 20px;
+            border-radius: 25px;
+            border: none;
+            font-size: 1.1rem;
+            flex: 1;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .item:hover { transform: translateY(-10px); } /* 마우스 올리면 둥실 떠오름 */
+
+        .item-icon { font-size: 3.5rem; margin-bottom: 10px; display: block; }
+        .item strong { display: block; font-size: 1.4rem; margin-bottom: 8px; color: #e67e22; }
+        .item-desc { color: #ff4757; font-weight: bold; font-size: 1.2rem; }
+
+        /* 7. 돌아가기 버튼 */
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 18px 55px;
+            background: linear-gradient(to right, #ff9f43, #ee5253);
+            color: white;
+            text-decoration: none;
+            font-size: 1.7rem;
+            border-radius: 60px;
+            box-shadow: 0 10px 25px rgba(238, 82, 83, 0.4);
+            transition: all 0.3s;
+            border: 4px solid #fff;
+        }
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(238, 82, 83, 0.6);
+        }
+
+        /* 통통 튀는 애니메이션 정의 */
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="guide-box">
+        <h1>게임 규칙 설명</h1>
+        <br>
+        <div class="subtitle">⚡ 120초 타임어택 챌린지! ⚡</div>
+        
+        <div class="rule-section">
+            <div class="rule-item">
+                <div class="rule-icon">🎯</div>
+                <div>
+                    <strong>목표:</strong> 제한 시간(120초) 안에 최대한 높은 점수를 얻으세요!
+                </div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-icon">🖐️</div>
+                <div>
+                    <strong>방법:</strong> 마우스로 과일들을 드래그해서 묶어주세요.
+                </div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-icon">🔟</div>
+                <div>
+                    <strong>규칙:</strong> 묶인 과일 숫자의 합이 <span class="highlight">딱 10</span>이 되면 팡! 터집니다.<br>
+                    (예: <span class="highlight">5 + 5</span> / <span class="highlight">2 + 3 + 5</span> 성공!)
+                </div>
+            </div>
+        </div>
+
+        <h3>✨ 승리를 위한 특수 아이템 ✨</h3>
+        <div class="item-info">
+            <div class="item">
+                <span class="item-icon">⏱️</span>
+                <strong>초시계 아이템</strong>
+                시간이 부족할 때 필수!<br>
+                <span class="item-desc">시간 추가!</span>
+            </div>
+            <div class="item">
+                <span class="item-icon">🏆</span>
+                <strong>황금 사과</strong>
+                고득점을 향한 지름길!<br>
+                <span class="item-desc">보너스 점수 획득</span>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">준비 완료! 도전하기 ▶</a>
+    </div>
+
+</body>
+</html>
