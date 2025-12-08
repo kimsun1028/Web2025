@@ -130,7 +130,8 @@ body {
     box-shadow: 0 2px 0 #e58e26;
     transform: translateY(3px);
 }
-/* 뒤로가기 버튼 추가 (자유롭게 수정하셔도 됩니다!) */
+
+/* 뒤로가기 버튼 추가 */
 #back-btn {
     margin-top: 10px; /* start-btn 바로 아래 간격 */
     padding: 15px 40px;
@@ -148,7 +149,6 @@ body {
     box-shadow: 0 2px 0 #22a6b3;
     transform: translateY(3px);
 }
-
 
 /* 6. 게임 종료 팝업창 (Modal) */
 .modal {
@@ -190,7 +190,7 @@ body {
     font-family: 'Jua', sans-serif;
 }
 
-/*게임 내 두 버튼을 위한 css 구현*/
+/* 게임 내 두 버튼 정렬 */
 .control-area {
     display: flex;
     flex-direction: column;   

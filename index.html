@@ -87,6 +87,7 @@
 <body>
 
     <h1>🍓 과일 게임 🍇</h1>
+    <p id = "best-score-box"> 개인 최고 점수 : 0점</p>
     <p>제한 시간 안에 최고의 점수를 노려보세요!</p>
     
     <a href="Fruitgame/Fruitgame.html" class="start-btn">GAME START ▶</a>
@@ -103,4 +104,15 @@
     <div class="background-fruit" style="left: 85%; animation-duration: 4.5s; animation-delay: 1.5s;">🍊</div>
 
 </body>
+<script>
+    // 저장된 최고 점수 불러오기
+    let highScore = localStorage.getItem("highScore");
+
+    // 값이 없으면 0으로 초기화
+    if (!highScore) highScore = 0;
+
+    // 화면에 출력
+    document.getElementById("best-score-box").innerText =
+        `개인 최고 점수 : ${highScore}점`;
+</script>
 </html>
