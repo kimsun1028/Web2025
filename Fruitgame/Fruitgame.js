@@ -8,6 +8,12 @@ const timerDisplay = document.querySelector("#timer");
 const modal = document.querySelector("#game-over-modal");
 const finalScoreDisplay = document.querySelector("#final-score");
 
+// 뒤로가기 버튼 추가
+document.querySelector("#back-btn").onclick = () => {
+    window.location.href = "../index.html"; 
+};
+
+
 // 전역 변수 설정
 let score = 0;
 let timer = 120;
@@ -18,6 +24,9 @@ let startY = null;
 let isDragging = false;
 let tprob = 0.02
 let bprob = 0.02
+// 최고 점수
+let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+
 
 // 이벤트리스너 설정
 document.addEventListener("mousedown", mdown);
@@ -186,7 +195,24 @@ function isSelected(fruit,left,top,width,height){
 function showGameOverModal() {
     const modal = document.querySelector("#game-over-modal");
     const finalScore = document.querySelector("#final-score");
-    
+
+    // 최고점수 초기화하는 부분
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+    }
+
+    let highScoreBox = document.querySelector("#high-score-text");
+    if (!highScoreBox) {
+        highScoreBox = document.createElement("p");
+        highScoreBox.id = "high-score-text";
+        modal.querySelector(".modal-content").appendChild(highScoreBox);
+    }
+    highScoreBox.textContent = `최고 점수 : ${highScore}점`
+
+    modal.classList.remove("hidden");
+    //
+
     // 점수 넣어주고
     finalScore.textContent = score + "점";
     
