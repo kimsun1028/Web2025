@@ -12,12 +12,14 @@ const finalScoreDisplay = document.querySelector("#final-score");
 const skins = {
     default: "image/Apple.png",
     strawberry: "image/Strawberry.png",
+    grape: "image/Grape.png",
     watermelon: "image/Watermelon.png"
 };
 // 스킨 요소  추가
 const goldenskins = {
     default: "image/Golden_Apple.png",
     strawberry: "image/Golden_Strawberry.png",
+    grape: "image/Golden_Grape.png",
     watermelon: "image/Golden_Watermelon.png"
 };
 let currentSkin = localStorage.getItem("currentSkin") || "default";
@@ -46,8 +48,8 @@ const achievements = {
     score60: {
         unlocked: localStorage.getItem("achv_score60") === "true",
         condition: (score) => score >= 60,
-        message: "업적 해금: 60점 달성!",
-        onUnlock: () => {}
+        message: "업적 해금: 60점 달성!\n스킨 해금: 포도 스킨",
+        onUnlock: () => localStorage.setItem("unlock_grape", true)
     },
     score100: {
         unlocked: localStorage.getItem("achv_score100") === "true",

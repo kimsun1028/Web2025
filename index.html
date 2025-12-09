@@ -50,12 +50,17 @@
             text-decoration: none;
             color: white;
             background-color: #ff6b6b;
-            padding: 20px 60px;
+            padding: 18px 40px;
             border-radius: 50px;
             box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4);
             transition: all 0.3s; 
             border: 4px solid white;
             z-index: 10;
+            display: block;
+            width: 100%;
+            max-width: 410px;
+            text-align: center;
+            margin: 0 auto;
         }
 
         .start-btn:hover {
@@ -140,6 +145,19 @@
     background: #ff3b3b;
 }
 
+/* 메인 버튼 2열 레이아웃 */
+/* 2열 레이아웃 제거 - 기본 세로 정렬로 사용 */
+
+/* CTA 버튼 그룹 */
+.cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: min(460px, 92vw);
+    margin: 14px auto 0;
+    align-items: center;
+}
+
 /* 닫기 버튼 */
 .close-modal-btn {
     margin-top: 15px;
@@ -164,7 +182,6 @@
     </style>
 </head>
 <body>
-
     <h1>🍓 과일 게임 🍇</h1>
     <p style="margin-bottom: 10px;">제한 시간 안에 최고의 점수를 노려보세요!</p>
     <p id="best-score-box" style="margin-top: 5px;">개인 최고 점수 : 0점</p>
@@ -183,6 +200,7 @@
 
         <button class="skin-btn" data-skin="default">기본 사과 🍎</button>
         <button class="skin-btn" data-skin="strawberry">딸기 🍓</button>
+        <button class="skin-btn" data-skin="grape">포도 🍇</button>
         <button class="skin-btn" data-skin="watermelon">수박 🍉</button>
 
         <br><br>
@@ -211,18 +229,47 @@
 
     <script src="Fruitgame/skin.js"></script>
 
+    <div class="cta-group">
+        <a href="Fruitgame/Fruitgame.html" class="start-btn">GAME START ▶</a>
+        <a href="about.html" class="start-btn" style="background-color: #48dbfb; box-shadow: 0 10px 20px rgba(72, 219, 251, 0.4);">
+            게임 방법 설명 📖
+        </a>
+        <a href="achievements.html" class="start-btn" style="background-color: #a29bfe; box-shadow: 0 10px 20px rgba(162, 155, 254, 0.4);">
+            업적 🏆
+        </a>
+    </div>
 
-    
-    <a href="Fruitgame/Fruitgame.html" class="start-btn">GAME START ▶</a>
-    
-    
-    <br><br> <a href="about.html" class="start-btn" style="background-color: #48dbfb; box-shadow: 0 10px 20px rgba(72, 219, 251, 0.4);">
-        게임 방법 설명 📖
-    </a>
+    <!-- 스킨 선택 팝업창 -->
+    <div id="skin-modal" class="skin-modal hidden">
+        <div class="skin-modal-content">
+            <h2>🍎 과일 스킨 선택</h2>
 
-    <br><br> <a href="achievements.html" class="start-btn" style="background-color: #a29bfe; box-shadow: 0 10px 20px rgba(162, 155, 254, 0.4);">
-        업적 🏆
-    </a>
+            <button class="skin-btn" data-skin="default">기본 사과 🍎</button>
+            <button class="skin-btn" data-skin="strawberry">딸기 🍓</button>
+            <button class="skin-btn" data-skin="watermelon">수박 🍉</button>
+
+            <br><br>
+            <button id="close-skin-modal" class="close-modal-btn">닫기</button>
+        </div>
+    </div>
+
+    <div id="skin-toast" class="hidden" style="
+        position: fixed;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.95);
+        border: 3px solid #ff9f43;
+        padding: 15px 30px;
+        font-size: 1.4rem;
+        border-radius: 15px;
+        color: #333;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.5s, transform 0.3s;">
+        🔒 이 스킨은 아직 해금되지 않았습니다!
+    </div>
 
     <div class="background-fruit" style="left: 10%; animation-duration: 4s;">🍎</div>
     <div class="background-fruit" style="left: 20%; animation-duration: 6s; animation-delay: 1s;">🍌</div>
@@ -243,6 +290,12 @@
     const strawberryBtn = document.querySelector('.skin-btn[data-skin="strawberry"]');
     if (highScore >= 30) {
         strawberryBtn.disabled = false;
+    }
+
+    // 포도 버튼 활성화 여부 결정 (60점 이상)
+    const grapeBtn = document.querySelector('.skin-btn[data-skin="grape"]');
+    if (highScore >= 60) {
+        grapeBtn.disabled = false;
     }
 
     // 수박 버튼 활성화 여부 결정 (100점 이상)
