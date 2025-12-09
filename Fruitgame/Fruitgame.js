@@ -30,7 +30,7 @@ const achievements = {
     score20: {
         unlocked: localStorage.getItem("achv_score20") === "true",
         condition: (score) => score >= 20,
-        message: "스킨 해금: 수박 스킨",
+        message: "업적 해금: 20점 달성!\n스킨 해금: 수박 스킨",
         onUnlock: () => localStorage.setItem("unlock_watermelon", true)
     },
     score60: {
@@ -282,23 +282,24 @@ function showGameOverModal() {
 function unlockAchievement(key) {
     const achv = achievements[key];
 
-    if (!achv || achv.unlocked) return; // 이미 해금되었으면 무시
+    if (!achv || achv.unlocked) return;
 
     achv.unlocked = true;
     localStorage.setItem("achv_" + key, true);
 
-    // 추가 효과가 있으면 실행 
     achv.onUnlock();
 
-    // 팝업 메시지 띄우기
     const toast = document.getElementById("achievement-toast");
     const text = document.getElementById("achievement-text");
 
     text.textContent = "🏆 " + achv.message;
+
+    // 🔥 hidden 제거해야 화면에 나타남
+    toast.classList.remove("hidden");
     toast.classList.add("show");
 
-    // 2.5초 후 자동 사라짐
     setTimeout(() => {
         toast.classList.remove("show");
+        toast.classList.add("hidden");
     }, 2500);
 }

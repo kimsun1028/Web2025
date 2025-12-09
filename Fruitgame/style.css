@@ -201,19 +201,22 @@ body {
 /* 업적 해금 알림창 */
 #achievement-toast {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(255,255,255,0.9);
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);  /* 🔥 가운데 정렬 */
+    background: rgba(255,255,255,0.95);
     border: 3px solid gold;
-    padding: 15px 25px;
-    font-size: 1.4rem;
+    padding: 15px 35px;
+    font-size: 1.6rem;            /* 조금 더 크게 */
     border-radius: 15px;
     color: #333;
     box-shadow: 0 4px 10px rgba(0,0,0,0.25);
     z-index: 9999;
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.5s, transform 0.3s;
 }
+
 #achievement-toast.show {
     opacity: 1;
+    transform: translateX(-50%) translateY(10px); /* 부드럽게 내려오는 효과 */
 }
