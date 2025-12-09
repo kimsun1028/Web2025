@@ -22,7 +22,15 @@ let currentSkin = localStorage.getItem("currentSkin") || "default";
 
 // 뒤로가기 버튼 추가
 document.querySelector("#back-btn").onclick = () => {
-    window.location.href = "../index.html"; 
+
+    // 🔥 현재 점수가 최고 점수보다 크면 업데이트
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+    }
+
+    // 메인 화면으로 이동
+    window.location.href = "../index.html";
 };
 
 // === 업적 시스템 ===

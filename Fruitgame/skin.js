@@ -24,17 +24,22 @@ function showSkinToast(msg) {
 
 
 document.querySelectorAll(".skin-btn").forEach(btn => {
+    const skin = btn.dataset.skin;
+
+    // 잠겨 있으면 locked 클래스 추가 + 클릭 불가능
+    if (skin === "watermelon" && !unlocked.watermelon) {
+        btn.classList.add("locked");
+    }
+
     btn.addEventListener("click", () => {
 
-        const skin = btn.dataset.skin;
-
-        // 🔒 잠금 스킨 클릭 시 선택 금지
+        // 🔒 해금 안 된 경우 → 선택 금지 + 알림
         if (skin === "watermelon" && !unlocked.watermelon) {
             showSkinToast("🔒 수박 스킨은 아직 해금되지 않았습니다! (20점 업적 필요)");
-            return;   // ❗ 중요: 바로 종료해야 스킨 저장이 안 됨
+            return;
         }
 
-        // ✔ 정상 스킨 저장
+        // ✔ 정상 선택
         localStorage.setItem("currentSkin", skin);
 
         const txt = document.getElementById("current-skin-text");
