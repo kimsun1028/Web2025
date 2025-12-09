@@ -197,3 +197,23 @@ body {
     align-items: center;      
     margin-top: 20px;
 }
+
+/* 업적 해금 알림창 */
+#achievement-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.9);
+    border: 3px solid gold;
+    padding: 15px 25px;
+    font-size: 1.4rem;
+    border-radius: 15px;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+#achievement-toast.show {
+    opacity: 1;
+}

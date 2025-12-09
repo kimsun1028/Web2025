@@ -17,7 +17,6 @@ document.querySelectorAll(".skin-btn").forEach(btn => {
             else if (skin === "watermelon") txt.innerText = "현재 스킨 : 수박 🍉";
         }
 
-        alert(`스킨 '${skin}' 장착 완료!`);
     });
 });
 

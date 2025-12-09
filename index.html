@@ -72,7 +72,76 @@
             animation: drop 5s infinite linear;
         }
 
-        
+        /* 🔹 스킨 선택 버튼 */
+    .skin-open-btn {
+        font-size: 1.3rem;
+        padding: 10px 25px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        background: #ff9f43;
+        color: white;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    }
+
+    /* 🔹 팝업창 전체 영역 */
+    .skin-modal {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    /* 평소에는 숨김 */
+    .hidden { display: none; }
+
+    /* 🔹 팝업 박스 */
+    .skin-modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        width: 300px;
+        animation: pop 0.22s ease-out;
+    }
+
+@keyframes pop {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 🔹 스킨 버튼 */
+.skin-modal-content .skin-btn {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.skin-modal-content .skin-btn:hover {
+    background: #ff3b3b;
+}
+
+/* 닫기 버튼 */
+.close-modal-btn {
+    margin-top: 15px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    background: #aaa;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); } /* 위로 20px 이동 */
@@ -87,22 +156,33 @@
 <body>
 
     <h1>🍓 과일 게임 🍇</h1>
-    <p id = "best-score-box"> 개인 최고 점수 : 0점</p>
-    <p>제한 시간 안에 최고의 점수를 노려보세요!</p>
+    <p style="margin-bottom: 10px;">제한 시간 안에 최고의 점수를 노려보세요!</p>
+    <p id="best-score-box" style="margin-top: 5px;">개인 최고 점수 : 0점</p>
 
-    <div id="skin-select-box">
-    <h2>🍎 과일 스킨 선택</h2>
 
-    <button class="skin-btn" data-skin="default">기본 사과</button>
-    <button class="skin-btn" data-skin="watermelon" disabled>
-    수박 (20점 해금)
-</button>
+    <!-- 스킨 선택 버튼 -->
+<button id="open-skin-modal" class="skin-open-btn">🎨 과일 스킨 선택</button>
 
+<!-- 현재 스킨 표시 -->
+<p id="current-skin-text">현재 스킨 : 기본 사과 🍎</p>
+
+<!-- 스킨 선택 팝업창 -->
+<div id="skin-modal" class="skin-modal hidden">
+    <div class="skin-modal-content">
+        <h2>🍎 과일 스킨 선택</h2>
+
+        <button class="skin-btn" data-skin="default">기본 사과 🍎</button>
+        <button class="skin-btn" data-skin="watermelon">수박 🍉</button>
+
+        <br><br>
+        <button id="close-skin-modal" class="close-modal-btn">닫기</button>
     </div>
-    <p id="current-skin-text">현재 스킨 : 기본 사과</p>
+</div>
 
 
-    <script src="skin.js"></script>
+
+    <script src="Fruitgame/skin.js"></script>
+
 
     
     <a href="Fruitgame/Fruitgame.html" class="start-btn">GAME START ▶</a>
@@ -134,6 +214,29 @@
         melonBtn.disabled = false;
         melonBtn.innerText = "수박 스킨 선택";
     }
+
+    const modal = document.getElementById("skin-modal");
+    const openBtn = document.getElementById("open-skin-modal");
+    const closeBtn = document.getElementById("close-skin-modal");
+
+    openBtn.onclick = () => modal.classList.remove("hidden");
+    closeBtn.onclick = () => modal.classList.add("hidden");
+
+    // 스킨 선택 버튼 클릭 시 저장
+    document.querySelectorAll(".skin-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const skin = btn.dataset.skin;
+            localStorage.setItem("currentSkin", skin);
+
+            // 텍스트 업데이트
+            const txt = document.getElementById("current-skin-text");
+            txt.innerText = skin === "default"
+                ? "현재 스킨 : 기본 사과 🍎"
+                : "현재 스킨 : 수박 🍉";
+
+            modal.classList.add("hidden");
+        });
+    });
 </script>
 
 </html>

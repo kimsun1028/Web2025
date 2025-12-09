@@ -25,6 +25,28 @@ document.querySelector("#back-btn").onclick = () => {
     window.location.href = "../index.html"; 
 };
 
+// === 업적 시스템 ===
+const achievements = {
+    score20: {
+        unlocked: localStorage.getItem("achv_score20") === "true",
+        condition: (score) => score >= 20,
+        message: "스킨 해금: 수박 스킨",
+        onUnlock: () => localStorage.setItem("unlock_watermelon", true)
+    },
+    score60: {
+        unlocked: localStorage.getItem("achv_score60") === "true",
+        condition: (score) => score >= 60,
+        message: "업적 해금: 60점 달성!",
+        onUnlock: () => {}
+    },
+    score100: {
+        unlocked: localStorage.getItem("achv_score100") === "true",
+        condition: (score) => score >= 100,
+        message: "업적 해금: 100점 달성!",
+        onUnlock: () => {}
+    }
+};
+
 
 // 전역 변수 설정
 let score = 0;
@@ -185,6 +207,13 @@ function removeFruit() {
         score += num + 4*bonus_num;
         timer += 5*timer_num;
         scoreDisplay.textContent = score;
+        // 업적 체크
+        for (let key in achievements) {
+            if (achievements[key].condition(score)) {
+                unlockAchievement(key);
+            }
+        }
+
         timerDisplay.textContent = timer;
     }
 }
@@ -214,6 +243,7 @@ function isSelected(fruit,left,top,width,height){
     else
         return false
 }
+
 // [추가] 게임 종료 팝업 띄우는 함수
 function showGameOverModal() {
     const modal = document.querySelector("#game-over-modal");
@@ -246,4 +276,29 @@ function showGameOverModal() {
     // 스킨 해금 시스템
     if (highScore >= 20) localStorage.setItem("unlock_watermelon", true);
 
+}
+
+// 업적 해금 함수
+function unlockAchievement(key) {
+    const achv = achievements[key];
+
+    if (!achv || achv.unlocked) return; // 이미 해금되었으면 무시
+
+    achv.unlocked = true;
+    localStorage.setItem("achv_" + key, true);
+
+    // 추가 효과가 있으면 실행 
+    achv.onUnlock();
+
+    // 팝업 메시지 띄우기
+    const toast = document.getElementById("achievement-toast");
+    const text = document.getElementById("achievement-text");
+
+    text.textContent = "🏆 " + achv.message;
+    toast.classList.add("show");
+
+    // 2.5초 후 자동 사라짐
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
 }
