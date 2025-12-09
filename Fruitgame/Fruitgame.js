@@ -8,6 +8,18 @@ const timerDisplay = document.querySelector("#timer");
 const modal = document.querySelector("#game-over-modal");
 const finalScoreDisplay = document.querySelector("#final-score");
 
+// 스킨 요소  추가
+const skins = {
+    default: "image/Apple.png",
+    watermelon: "image/Watermelon.png"
+};
+// 스킨 요소  추가
+const goldenskins = {
+    default: "image/Golden_Apple.png",
+    watermelon: "image/Golden_Watermelon.png"
+};
+let currentSkin = localStorage.getItem("currentSkin") || "default";
+
 // 뒤로가기 버튼 추가
 document.querySelector("#back-btn").onclick = () => {
     window.location.href = "../index.html"; 
@@ -52,12 +64,18 @@ function createFruits() {
         const num = Math.floor(Math.random() * 9) + 1;
         fruit.textContent = num;
 
+        
+
         // 특수 과일 확률 적용
         let r = Math.random();
         if (r < tprob) {
             fruit.classList.add("timer-fruit");  // +5초 과일
         } else if (r < tprob + bprob) {
             fruit.classList.add("bonus-fruit");  // +5점 과일
+            fruit.style.bachgroundImage = `url(${goldenSkins[currentSkin] || goldenSkins.default})`;
+        } else {
+             // 일반 과일일 때만 스킨 적용
+            fruit.style.backgroundImage = `url(${skins[currentSkin]})`;
         }
 
         gameArea.appendChild(fruit);
@@ -196,7 +214,15 @@ function showGameOverModal() {
     const modal = document.querySelector("#game-over-modal");
     const finalScore = document.querySelector("#final-score");
 
-    // 최고점수 초기화하는 부분
+
+    // 점수 넣어주고
+    finalScore.textContent = score + "점";
+    
+    // 숨겨뒀던 창을 보여줌 (hidden 클래스 제거)
+    modal.classList.remove("hidden");
+
+
+     // 최고점수 초기화하는 부분
     if (score > highScore) {
         highScore = score;
         localStorage.setItem("highScore", highScore);
@@ -211,11 +237,8 @@ function showGameOverModal() {
     highScoreBox.textContent = `최고 점수 : ${highScore}점`
 
     modal.classList.remove("hidden");
-    //
 
-    // 점수 넣어주고
-    finalScore.textContent = score + "점";
-    
-    // 숨겨뒀던 창을 보여줌 (hidden 클래스 제거)
-    modal.classList.remove("hidden");
+    // 스킨 해금 시스템
+    if (highScore >= 20) localStorage.setItem("unlock_watermelon", true);
+
 }
