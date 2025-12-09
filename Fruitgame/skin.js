@@ -3,16 +3,30 @@ const unlocked = {
 };
 
 document.querySelectorAll(".skin-btn").forEach(btn => {
-    const skin = btn.dataset.skin;
-
-    // 해금되지 않았으면 스킵
-    if (skin !== "default" && !unlocked[skin]) return;
-
-    // 버튼 활성화
-    btn.disabled = false;
-
     btn.addEventListener("click", () => {
+
+        const skin = btn.dataset.skin;
+
+        // 현재 스킨 저장
         localStorage.setItem("currentSkin", skin);
+
+        // 화면에 표시
+        const txt = document.getElementById("current-skin-text");
+        if (txt) {
+            if (skin === "default") txt.innerText = "현재 스킨 : 기본 사과 🍎";
+            else if (skin === "watermelon") txt.innerText = "현재 스킨 : 수박 🍉";
+        }
+
         alert(`스킨 '${skin}' 장착 완료!`);
     });
+});
+
+// 페이지 로드 시 현재 스킨 표시
+window.addEventListener("load", () => {
+    const skin = localStorage.getItem("currentSkin") || "default";
+    const txt = document.getElementById("current-skin-text");
+    if (txt) {
+        if (skin === "default") txt.innerText = "현재 스킨 : 기본 사과 🍎";
+        else if (skin === "watermelon") txt.innerText = "현재 스킨 : 수박 🍉";
+    }
 });

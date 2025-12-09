@@ -47,6 +47,7 @@ document.addEventListener("mouseup", mup);
 
 // 게임 시작 함수
 startBtn.onclick = function gameStart() {
+    currentSkin = localStorage.getItem("currentSkin") || "default";
     gameArea.innerHTML = "";
     score = 0;
     createFruits();
@@ -74,7 +75,7 @@ function createFruits() {
             // 황금 과일
             fruit.classList.add("bonus-fruit");
             fruit.style.backgroundImage =
-                `url(${goldenskins[currentSkin] || goldenskins.default})`;
+                 `url(${goldenskins[currentSkin] || goldenskins.default})`;
 
         } else {
             // 일반 과일 스킨 적용

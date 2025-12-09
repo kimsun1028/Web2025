@@ -99,6 +99,8 @@
 </button>
 
     </div>
+    <p id="current-skin-text">현재 스킨 : 기본 사과</p>
+
 
     <script src="skin.js"></script>
 
@@ -119,13 +121,19 @@
 </body>
 <script>
     // 저장된 최고 점수 불러오기
-    let highScore = localStorage.getItem("highScore");
+    let highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
-    // 값이 없으면 0으로 초기화
-    if (!highScore) highScore = 0;
-
-    // 화면에 출력
+    // 화면에 표시
     document.getElementById("best-score-box").innerText =
         `개인 최고 점수 : ${highScore}점`;
+
+    // 수박 버튼 활성화 여부 결정
+    const melonBtn = document.querySelector('.skin-btn[data-skin="watermelon"]');
+
+    if (highScore >= 20) {
+        melonBtn.disabled = false;
+        melonBtn.innerText = "수박 스킨 선택";
+    }
 </script>
+
 </html>
