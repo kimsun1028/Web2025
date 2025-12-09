@@ -240,20 +240,9 @@
     closeBtn.onclick = () => modal.classList.add("hidden");
 
     // 스킨 선택 버튼 클릭 시 저장
-    document.querySelectorAll(".skin-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const skin = btn.dataset.skin;
-            localStorage.setItem("currentSkin", skin);
+    openBtn.onclick = () => modal.classList.remove("hidden");
+    closeBtn.onclick = () => modal.classList.add("hidden");
 
-            // 텍스트 업데이트
-            const txt = document.getElementById("current-skin-text");
-            txt.innerText = skin === "default"
-                ? "현재 스킨 : 기본 사과 🍎"
-                : "현재 스킨 : 수박 🍉";
-
-            modal.classList.add("hidden");
-        });
-    });
 </script>
 
 </html>
