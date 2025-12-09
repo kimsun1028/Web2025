@@ -91,6 +91,7 @@
     cursor: not-allowed;
     box-shadow: none;
     opacity: 0.6;
+    filter: grayscale(100%);
 }
 
 
@@ -181,6 +182,7 @@
         <h2>🍎 과일 스킨 선택</h2>
 
         <button class="skin-btn" data-skin="default">기본 사과 🍎</button>
+        <button class="skin-btn" data-skin="strawberry">딸기 🍓</button>
         <button class="skin-btn" data-skin="watermelon">수박 🍉</button>
 
         <br><br>
@@ -218,6 +220,10 @@
         게임 방법 설명 📖
     </a>
 
+    <br><br> <a href="achievements.html" class="start-btn" style="background-color: #a29bfe; box-shadow: 0 10px 20px rgba(162, 155, 254, 0.4);">
+        업적 🏆
+    </a>
+
     <div class="background-fruit" style="left: 10%; animation-duration: 4s;">🍎</div>
     <div class="background-fruit" style="left: 20%; animation-duration: 6s; animation-delay: 1s;">🍌</div>
     <div class="background-fruit" style="left: 50%; animation-duration: 5s; animation-delay: 2s;">🍇</div>
@@ -233,12 +239,16 @@
     document.getElementById("best-score-box").innerText =
         `개인 최고 점수 : ${highScore}점`;
 
-    // 수박 버튼 활성화 여부 결정
-    const melonBtn = document.querySelector('.skin-btn[data-skin="watermelon"]');
+    // 딸기 버튼 활성화 여부 결정 (30점 이상)
+    const strawberryBtn = document.querySelector('.skin-btn[data-skin="strawberry"]');
+    if (highScore >= 30) {
+        strawberryBtn.disabled = false;
+    }
 
-    if (highScore >= 20) {
+    // 수박 버튼 활성화 여부 결정 (100점 이상)
+    const melonBtn = document.querySelector('.skin-btn[data-skin="watermelon"]');
+    if (highScore >= 100) {
         melonBtn.disabled = false;
-        melonBtn.innerText = "수박 스킨 선택";
     }
 
     const modal = document.getElementById("skin-modal");

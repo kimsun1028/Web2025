@@ -11,11 +11,13 @@ const finalScoreDisplay = document.querySelector("#final-score");
 // 스킨 요소  추가
 const skins = {
     default: "image/Apple.png",
+    strawberry: "image/Strawberry.png",
     watermelon: "image/Watermelon.png"
 };
 // 스킨 요소  추가
 const goldenskins = {
     default: "image/Golden_Apple.png",
+    strawberry: "image/Golden_Strawberry.png",
     watermelon: "image/Golden_Watermelon.png"
 };
 let currentSkin = localStorage.getItem("currentSkin") || "default";
@@ -35,11 +37,11 @@ document.querySelector("#back-btn").onclick = () => {
 
 // === 업적 시스템 ===
 const achievements = {
-    score20: {
-        unlocked: localStorage.getItem("achv_score20") === "true",
-        condition: (score) => score >= 20,
-        message: "업적 해금: 20점 달성!\n스킨 해금: 수박 스킨",
-        onUnlock: () => localStorage.setItem("unlock_watermelon", true)
+    score30: {
+        unlocked: localStorage.getItem("achv_score30") === "true",
+        condition: (score) => score >= 30,
+        message: "업적 해금: 30점 달성!\n스킨 해금: 딸기 스킨",
+        onUnlock: () => localStorage.setItem("unlock_strawberry", true)
     },
     score60: {
         unlocked: localStorage.getItem("achv_score60") === "true",
@@ -50,8 +52,8 @@ const achievements = {
     score100: {
         unlocked: localStorage.getItem("achv_score100") === "true",
         condition: (score) => score >= 100,
-        message: "업적 해금: 100점 달성!",
-        onUnlock: () => {}
+        message: "업적 해금: 100점 달성!\n스킨 해금: 수박 스킨",
+        onUnlock: () => localStorage.setItem("unlock_watermelon", true)
     }
 };
 
@@ -282,7 +284,7 @@ function showGameOverModal() {
     modal.classList.remove("hidden");
 
     // 스킨 해금 시스템
-    if (highScore >= 20) localStorage.setItem("unlock_watermelon", true);
+    if (highScore >= 100) localStorage.setItem("unlock_watermelon", true);
 
 }
 

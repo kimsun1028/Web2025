@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>업적</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Jua', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-family: 'Jua', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        /* 섹션 스타일 */
+        .achievement-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            border-bottom: 3px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* 업적 카드 */
+        .achievement-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        /* 해금된 업적 */
+        .achievement-card.unlocked {
+            border: 3px solid #ffd700;
+            background: linear-gradient(135deg, #fff9e6 0%, #fffef0 100%);
+        }
+
+        .achievement-card.unlocked::before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        /* 미해금 업적 */
+        .achievement-card.locked {
+            opacity: 0.7;
+            border: 3px dashed #ccc;
+            background: #f5f5f5;
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .achievement-name {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .achievement-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 15px;
+            min-height: 40px;
+        }
+
+        .achievement-status {
+            font-size: 0.95rem;
+            padding: 8px 15px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .achievement-status.unlocked {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .achievement-status.locked {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            font-size: 1.1rem;
+            padding: 40px 20px;
+        }
+
+        .stats {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🏆 업적</h1>
+        <div class="stats">
+            <div>달성한 업적: <span class="stats-number" id="unlocked-count">0</span> / <span id="total-count">0</span></div>
+        </div>
+    </div>
+
+    <!-- 달성한 업적 섹션 -->
+    <div class="achievement-section">
+        <div class="section-title">⭐ 달성한 업적</div>
+        <div id="unlocked-achievements" class="achievement-grid">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+        <div id="no-unlocked" class="empty-message">아직 달성한 업적이 없습니다.</div>
+    </div>
+
+    <!-- 미달성 업적 섹션 -->
+    <div class="achievement-section">
+        <div class="section-title">🔒 미달성 업적</div>
+        <div id="locked-achievements" class="achievement-grid">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+        <div id="no-locked" class="empty-message">모든 업적을 달성했습니다!</div>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="index.html" class="back-btn">← 돌아가기</a>
+    </div>
+</div>
+
+<script>
+    // 업적 데이터
+    const achievementData = {
+        score30: {
+            name: "30점 달성",
+            icon: "🍓",
+            description: "게임에서 30점 이상 획득",
+            reward: "딸기 스킨 해금"
+        },
+        score60: {
+            name: "60점 달성",
+            icon: "🌟",
+            description: "게임에서 60점 이상 획득",
+            reward: "업적 달성!"
+        },
+        score100: {
+            name: "100점 달성",
+            icon: "👑",
+            description: "게임에서 100점 이상 획득",
+            reward: "수박 스킨 해금"
+        }
+    };
+
+    // localStorage에서 업적 데이터 가져오기
+    function isAchievementUnlocked(key) {
+        return localStorage.getItem("achv_" + key) === "true";
+    }
+
+    // 현재 점수
+    const highScore = parseInt(localStorage.getItem("highScore")) || 0;
+
+    // 업적 카드 생성
+    function createAchievementCard(key, data) {
+        const isUnlocked = isAchievementUnlocked(key);
+        const progress = getProgress(key);
+        
+        const card = document.createElement("div");
+        card.className = `achievement-card ${isUnlocked ? "unlocked" : "locked"}`;
+        
+        card.innerHTML = `
+            <div class="achievement-icon">${data.icon}</div>
+            <div class="achievement-name">${data.name}</div>
+            <div class="achievement-description">${data.description}</div>
+            <div class="achievement-status ${isUnlocked ? "unlocked" : "locked"}">
+                ${isUnlocked ? "✓ 달성완료" : "미달성"}
+            </div>
+            ${!isUnlocked ? `<div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>` : ""}
+            <div style="color: #999; font-size: 0.9rem; margin-top: 10px;">보상: ${data.reward}</div>
+        `;
+        
+        return card;
+    }
+
+    // 진행도 계산
+    function getProgress(key) {
+        const scoreThresholds = {
+            score30: 30,
+            score60: 60,
+            score100: 100
+        };
+        
+        const threshold = scoreThresholds[key];
+        return Math.min((highScore / threshold) * 100, 100);
+    }
+
+    // 페이지 초기화
+    function initAchievements() {
+        const unlockedContainer = document.getElementById("unlocked-achievements");
+        const lockedContainer = document.getElementById("locked-achievements");
+        
+        let unlockedCount = 0;
+        let totalCount = Object.keys(achievementData).length;
+        
+        // 달성한 업적과 미달성 업적으로 분류
+        Object.entries(achievementData).forEach(([key, data]) => {
+            const isUnlocked = isAchievementUnlocked(key);
+            const card = createAchievementCard(key, data);
+            
+            if (isUnlocked) {
+                unlockedContainer.appendChild(card);
+                unlockedCount++;
+            } else {
+                lockedContainer.appendChild(card);
+            }
+        });
+
+        // 통계 업데이트
+        document.getElementById("unlocked-count").textContent = unlockedCount;
+        document.getElementById("total-count").textContent = totalCount;
+
+        // 빈 메시지 토글
+        document.getElementById("no-unlocked").style.display = unlockedCount === 0 ? "block" : "none";
+        document.getElementById("no-locked").style.display = unlockedCount === totalCount ? "block" : "none";
+    }
+
+    // 페이지 로드 시 초기화
+    initAchievements();
+</script>
+
+</body>
+</html>
