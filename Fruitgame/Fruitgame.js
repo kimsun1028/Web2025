@@ -64,23 +64,27 @@ function createFruits() {
         const num = Math.floor(Math.random() * 9) + 1;
         fruit.textContent = num;
 
-        
-
-        // 특수 과일 확률 적용
         let r = Math.random();
+
         if (r < tprob) {
-            fruit.classList.add("timer-fruit");  // +5초 과일
+            // 타이머 과일
+            fruit.classList.add("timer-fruit");
+
         } else if (r < tprob + bprob) {
-            fruit.classList.add("bonus-fruit");  // +5점 과일
-            fruit.style.bachgroundImage = `url(${goldenSkins[currentSkin] || goldenSkins.default})`;
+            // 황금 과일
+            fruit.classList.add("bonus-fruit");
+            fruit.style.backgroundImage =
+                `url(${goldenskins[currentSkin] || goldenskins.default})`;
+
         } else {
-             // 일반 과일일 때만 스킨 적용
+            // 일반 과일 스킨 적용
             fruit.style.backgroundImage = `url(${skins[currentSkin]})`;
         }
 
         gameArea.appendChild(fruit);
     }
 }
+
 
 // 타이머 시작 함수
 function startTimer() {

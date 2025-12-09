@@ -1,15 +1,14 @@
-// 로컬에서 해금 상태 가져오기
 const unlocked = {
-    banana: localStorage.getItem("unlock_banana"),
-    grape: localStorage.getItem("unlock_grape"),
     watermelon: localStorage.getItem("unlock_watermelon")
 };
 
-// 버튼 활성화
 document.querySelectorAll(".skin-btn").forEach(btn => {
     const skin = btn.dataset.skin;
+
+    // 해금되지 않았으면 스킵
     if (skin !== "default" && !unlocked[skin]) return;
 
+    // 버튼 활성화
     btn.disabled = false;
 
     btn.addEventListener("click", () => {
