@@ -357,7 +357,7 @@ function unlockAchievement(key) {
     if (!achv || achv.unlocked) return;
 
     achv.unlocked = true;
-    localStorage.setItem("achv_" + key.replace("score", ""), "true");
+    localStorage.setItem("achv_" + key, "true");
 
     achv.onUnlock();
 
