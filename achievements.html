@@ -250,6 +250,18 @@
             icon: "👑",
             description: "게임에서 100점 이상 획득",
             reward: "수박 스킨 해금"
+        },
+        fibonacci: {
+            name: "피보나치 수열",
+            icon: "🔢",
+            description: "2+3+5 조합으로 점수 획득 8회 달성",
+            reward: "업적 달성"
+        },
+        sequence: {
+            name: "자연수 수열",
+            icon: "📊",
+            description: "1+2+3+4 조합으로 점수 획득 5회 달성",
+            reward: "업적 달성"
         }
     };
 
@@ -291,8 +303,23 @@
             score100: 100
         };
         
-        const threshold = scoreThresholds[key];
-        return Math.min((highScore / threshold) * 100, 100);
+        // 점수 기반 업적
+        if (scoreThresholds[key]) {
+            const threshold = scoreThresholds[key];
+            return Math.min((highScore / threshold) * 100, 100);
+        }
+        
+        // 조합 기반 업적
+        if (key === "fibonacci") {
+            const fibCount = parseInt(localStorage.getItem("achv_fib_count")) || 0;
+            return Math.min((fibCount / 8) * 100, 100);
+        }
+        if (key === "sequence") {
+            const seqCount = parseInt(localStorage.getItem("achv_seq_count")) || 0;
+            return Math.min((seqCount / 5) * 100, 100);
+        }
+        
+        return 0;
     }
 
     // 페이지 초기화

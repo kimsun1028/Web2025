@@ -73,6 +73,20 @@ const achievements = {
         condition: (score) => score >= 100,
         message: "업적 해금: 100점 달성!\n스킨 해금: 수박 스킨",
         onUnlock: () => localStorage.setItem("unlock_watermelon", "true")
+    },
+    fibonacci: {
+        unlocked: localStorage.getItem("achv_fibonacci") === "true",
+        count: parseInt(localStorage.getItem("achv_fib_count")) || 0,
+        condition: (count) => count >= 8,
+        message: "업적 해금: 피보나치 수열!\n2+3+5 조합 8회 달성",
+        onUnlock: () => {}
+    },
+    sequence: {
+        unlocked: localStorage.getItem("achv_sequence") === "true",
+        count: parseInt(localStorage.getItem("achv_seq_count")) || 0,
+        condition: (count) => count >= 5,
+        message: "업적 해금: 자연수 수열!\n1+2+3+4 조합 5회 달성",
+        onUnlock: () => {}
     }
 };
 
@@ -270,6 +284,34 @@ function removeFruit() {
             popSound.play().catch(e => {});
         }
 
+        // 조합 검사: 선택된 숫자들을 배열로 만들어 확인
+        const selectedNumbers = Array.from(selectedFruits)
+            .filter(f => f.textContent !== "")
+            .map(f => parseInt(f.textContent))
+            .sort((a, b) => a - b);
+
+        // 2+3+5 조합 검사
+        if (JSON.stringify(selectedNumbers) === JSON.stringify([2, 3, 5])) {
+            const fibCount = (parseInt(localStorage.getItem("achv_fib_count")) || 0) + 1;
+            localStorage.setItem("achv_fib_count", fibCount);
+            achievements.fibonacci.count = fibCount;
+            
+            if (achievements.fibonacci.condition(fibCount) && !achievements.fibonacci.unlocked) {
+                unlockAchievement("fibonacci");
+            }
+        }
+
+        // 1+2+3+4 조합 검사
+        if (JSON.stringify(selectedNumbers) === JSON.stringify([1, 2, 3, 4])) {
+            const seqCount = (parseInt(localStorage.getItem("achv_seq_count")) || 0) + 1;
+            localStorage.setItem("achv_seq_count", seqCount);
+            achievements.sequence.count = seqCount;
+            
+            if (achievements.sequence.condition(seqCount) && !achievements.sequence.unlocked) {
+                unlockAchievement("sequence");
+            }
+        }
+
         for (const selected of selectedFruits) {
             num++;
             if (selected.classList.contains("bonus-fruit")) bonus_num++;
@@ -290,8 +332,11 @@ function removeFruit() {
         
         // 업적 체크
         for (let key in achievements) {
-            if (achievements[key].condition(score)) {
-                unlockAchievement(key);
+            if (achievements[key].condition && typeof achievements[key].condition === 'function') {
+                const conditionValue = achievements[key].count !== undefined ? achievements[key].count : score;
+                if (achievements[key].condition(conditionValue)) {
+                    unlockAchievement(key);
+                }
             }
         }
         
