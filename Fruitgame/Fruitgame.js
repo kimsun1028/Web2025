@@ -65,6 +65,7 @@ let score = 0;
 let timer = 120;
 let selectBox = null;
 let timerId = null;
+let scoreAnimationTimer = null;
 let startX = null;
 let startY = null;
 let isDragging = false;
@@ -216,16 +217,34 @@ function removeFruit() {
             selected.classList.remove("timer-fruit")
         }
         
-        score += num + 4*bonus_num;
-        timer += 5*timer_num;
-        scoreDisplay.textContent = score;
+        const earnedPoints = num + 4*bonus_num;
+        const oldScore = score;
+        
+        // 실제 점수는 즉시 업데이트 (연속 득점 시 정확한 계산)
+        score += earnedPoints;
+        
+        // "기존점수 + 얻은점수" 형태로 표시
+        scoreDisplay.textContent = `${oldScore} + ${earnedPoints}`;
+        
+        // 이전 애니메이션 타이머가 있으면 취소
+        if (scoreAnimationTimer) {
+            clearTimeout(scoreAnimationTimer);
+        }
+        
+        // 1.5초 후 합산된 점수로 표시만 업데이트
+        scoreAnimationTimer = setTimeout(() => {
+            scoreDisplay.textContent = score;
+            scoreAnimationTimer = null;
+        }, 1500);
+        
         // 업적 체크
         for (let key in achievements) {
             if (achievements[key].condition(score)) {
                 unlockAchievement(key);
             }
         }
-
+        
+        timer += 5*timer_num;
         timerDisplay.textContent = timer;
     }
 }
