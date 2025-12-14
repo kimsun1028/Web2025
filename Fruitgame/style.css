@@ -220,3 +220,29 @@ body {
     opacity: 1;
     transform: translateX(-50%) translateY(10px); /* 부드럽게 내려오는 효과 */
 }
+
+/* 오른쪽 상단에 고정된 소리 버튼 */
+#sound-btn {
+    position: absolute;  /* 위치를 내 맘대로 정하겠다! */
+    top: 25px;           /* 위에서 25px 떨어짐 */
+    right: 30px;         /* 오른쪽에서 30px 떨어짐 */
+    z-index: 1000;       /* 다른 그림들보다 위에 뜨게 함 */
+
+    /* 예쁘게 꾸미기 */
+    background-color: #00b894; /* 초기색: 초록(켜짐) */
+    color: white;
+    font-family: 'Jua', sans-serif;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: 3px solid white;
+    border-radius: 30px;       /* 둥글둥글하게 */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2); /* 그림자 */
+    cursor: pointer;
+    transition: transform 0.2s; /* 눌렀을 때 부드럽게 */
+}
+
+/* 마우스 올렸을 때 효과 */
+#sound-btn:hover {
+    transform: scale(1.1); /* 살짝 커짐 */
+    background-color: #55efc4;
+}
