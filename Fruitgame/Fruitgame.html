@@ -1,4 +1,10 @@
+<!DOCTYPE html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Game</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -7,6 +13,9 @@
 </head>
 
 <body>
+    <button id="sound-btn">소리 끄기 🔇</button>
+
+
     <div class="game-header">
         <h1>🍎 Fruit Game 🍇</h1>
         <div class="status-board">
@@ -17,11 +26,24 @@
 
     <div id="game-area"></div>
 
-    <div class="control-area">
+    <div class="control-area" style="text-align: center; margin-top: 20px;">
         <button id="start-btn">게임 시작</button>
-        <!--뒤로가기 버튼 추가-->
-        <button id="back-btn">뒤로 가기</button>
-    </div>
+        
+        <button id="back-btn" onclick="location.href='../index.html'" style="
+            margin-left: 10px;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-family: 'Jua', sans-serif;
+            background-color: #74b9ff; 
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #0984e3;
+            transition: all 0.1s;
+        ">뒤로 가기 ↩</button>
+
+        </div>
 
     <div id="game-over-modal" class="modal hidden">
         <div class="modal-content">
@@ -31,9 +53,7 @@
             <button onclick="location.reload()">다시 하기 🔄</button>
         </div>
     </div>
-    <div id="achievement-toast" class="hidden">
-        <p id="achievement-text">업적 해금!</p>
-    </div>
 
     <script src="Fruitgame.js"></script>
 </body>
+</html>
