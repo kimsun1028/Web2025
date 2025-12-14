@@ -285,6 +285,20 @@
     document.getElementById("best-score-box").innerText =
         `개인 최고 점수 : ${highScore}점`;
 
+    // 현재 스킨 표시 (페이지 로드 시)
+    const currentSkin = localStorage.getItem("currentSkin") || "default";
+    const currentSkinText = document.getElementById("current-skin-text");
+    
+    if (currentSkin === "default") {
+        currentSkinText.innerText = "현재 스킨 : 기본 사과 🍎";
+    } else if (currentSkin === "strawberry") {
+        currentSkinText.innerText = "현재 스킨 : 딸기 🍓";
+    } else if (currentSkin === "grape") {
+        currentSkinText.innerText = "현재 스킨 : 포도 🍇";
+    } else if (currentSkin === "watermelon") {
+        currentSkinText.innerText = "현재 스킨 : 수박 🍉";
+    }
+
     // 딸기 버튼 활성화 여부 결정 (30점 이상)
     const strawberryBtn = document.querySelector('.skin-btn[data-skin="strawberry"]');
     if (highScore >= 30) {
